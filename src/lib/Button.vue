@@ -32,8 +32,8 @@ $radius: 4px;
   white-space: nowrap;
   background: white;
   color: $color;
-  border: 1px solid $border-color;
   border-radius: $radius;
+  border: 1px solid $border-color;
   box-shadow: 0 1px 0 fade-out(black, 0.95);
   & + & {
     margin-left: 8px;
@@ -48,6 +48,26 @@ $radius: 4px;
   }
   &::-moz-focus-inner {
     border: 0;
+  }
+  &.gulu-theme-link {
+    background: transparent;
+    box-shadow: none;
+    color: $blue;
+    border: 0;
+    &:hover,
+    &:focus {
+      color: lighten($blue, 10%);
+    }
+  }
+  &.gulu-theme-text {
+    background: transparent;
+    box-shadow: none;
+    border: 0;
+    color: inherit;
+    &:hover,
+    &:focus {
+      background: darken(white, 5%);
+    }
   }
 }
 </style>
