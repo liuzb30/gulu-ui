@@ -1,7 +1,12 @@
 <template>
   <h1>示例1</h1>
   <Button @click="toggle">切换显示</Button>
-  <Dialog v-model:visible="y"></Dialog>
+  <Dialog
+    v-model:visible="y"
+    :closeOnOverlay="true"
+    :ok="f1"
+    :cancel="f2"
+  ></Dialog>
 </template>
 <script lang="ts">
 import Dialog from "../lib/Dialog.vue";
@@ -16,7 +21,12 @@ export default {
       console.log(y.value);
     };
 
-    return { y, toggle };
+    const f1 = () => {
+      return false;
+    };
+    const f2 = () => {};
+
+    return { y, toggle, f1, f2 };
   },
 };
 </script>
