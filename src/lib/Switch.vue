@@ -22,7 +22,7 @@ button {
   height: $h;
   width: $h * 2;
   border: none;
-  background-color: blue;
+  background-color: grey;
   border-radius: $h/2;
   position: relative;
   outline: none;
@@ -35,8 +35,12 @@ span {
   height: $h2;
   background-color: #fff;
   border-radius: $h2/2;
+  transition: left 250ms;
 }
-button.checked > span {
-  left: calc(100% - #{$h2} - 2px);
+button.checked {
+  background-color: blue;
+  span {
+    left: calc(100% - #{$h2} - 2px);
+  }
 }
 </style>
