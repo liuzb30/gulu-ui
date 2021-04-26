@@ -3,14 +3,13 @@
 </template>
 
 <script>
-import { ref } from "vue";
 export default {
   props: {
     value: Boolean | String,
   },
   setup(props, context) {
     const toggle = () => {
-      context.emit("input", !props.value);
+      context.emit("update:value", !props.value);
     };
     return { toggle };
   },
