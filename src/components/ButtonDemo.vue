@@ -39,6 +39,12 @@
     <Button theme="text">中文本</Button>
     <Button theme="text" level="danger">小文本</Button>
   </div>
+  <h1>示例3</h1>
+  <div>
+    <Button disabled>禁用按钮</Button>
+    <Button theme="link" disabled>禁用链接</Button>
+    <Button theme="text" disabled>禁用文本</Button>
+  </div>
 </template>
 <script lang="ts">
 import Button from "../lib/Button.vue";
