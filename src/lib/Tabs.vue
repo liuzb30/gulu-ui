@@ -3,26 +3,30 @@
     <div class="gulu-tabs-nav">
       <div
         class="gulu-tabs-nav-item"
-        v-for="(title, index) in titles"
+        @click="select(t)"
+        :class="{ selected: t === selcted }"
+        v-for="(t, index) in titles"
         :key="index"
       >
-        {{ title }}
+        {{ t }}
       </div>
     </div>
     <div class="gulu-tabs-content">
-      <component
-        class="gulu-tabs-content-item"
-        v-for="(component, index) in defaults"
-        :is="component"
-        :key="index"
-      ></component>
+      {{ current }}
+      <component class="gulu-tabs-content-item" :is="current"></component>
     </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { computed } from "vue";
 import Tab from "./Tab.vue";
 export default {
+  props: {
+    selected: {
+      type: String,
+    },
+  },
   setup(props, context) {
     const defaults = context.slots.default();
     // 检查是否都是Tab组件
@@ -31,8 +35,16 @@ export default {
         throw new Error("Tabs子标签必须是Tab");
       }
     });
+    // 获取选中的组件
+    const current = computed(() => {
+      return defaults.filter((tag) => tag.props.title === props.selected)[0];
+    });
     const titles = defaults.map((tag) => tag.props.title);
-    return { defaults, titles };
+
+    const select = (title: string) => {
+      context.emit("update:selected", title);
+    };
+    return { defaults, titles, current, select };
   },
 };
 </script>
