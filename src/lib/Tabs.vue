@@ -60,12 +60,6 @@ export default {
         throw new Error("Tabs子标签必须是Tab");
       }
     });
-    // 获取选中的组件
-    const current = computed(() => {
-      console.log(props.selected);
-
-      return defaults.filter((tag) => tag.props.title === props.selected)[0];
-    });
     const titles = defaults.map((tag) => tag.props.title);
 
     const select = (title: string) => {
@@ -74,7 +68,6 @@ export default {
     return {
       defaults,
       titles,
-      current,
       select,
       selectedItem,
       indicator,
