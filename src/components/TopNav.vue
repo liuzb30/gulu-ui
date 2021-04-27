@@ -42,9 +42,10 @@ $color: #007974;
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 11;
   justify-content: center;
   align-items: center;
+  background-color: white;
 
   > .logo {
     max-width: 6em;
@@ -74,6 +75,7 @@ $color: #007974;
     top: 50%;
     transform: translateY(-50%);
     background: fade-out(black, 0.9);
+    display: none;
   }
 
   @media (max-width: 500px) {
