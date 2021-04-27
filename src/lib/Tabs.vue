@@ -4,7 +4,7 @@
       <div
         class="gulu-tabs-nav-item"
         @click="select(t)"
-        :class="{ selected: t === selcted }"
+        :class="{ selected: t === selected }"
         v-for="(t, index) in titles"
         :key="index"
       >
@@ -12,8 +12,13 @@
       </div>
     </div>
     <div class="gulu-tabs-content">
-      {{ current }}
-      <component class="gulu-tabs-content-item" :is="current"></component>
+      <component
+        class="gulu-tabs-content-item"
+        :class="{ selected: c.props.title === selected }"
+        v-for="(c, index) in defaults"
+        :key="index"
+        :is="c"
+      ></component>
     </div>
   </div>
 </template>
@@ -37,6 +42,8 @@ export default {
     });
     // 获取选中的组件
     const current = computed(() => {
+      console.log(props.selected);
+
       return defaults.filter((tag) => tag.props.title === props.selected)[0];
     });
     const titles = defaults.map((tag) => tag.props.title);
@@ -72,6 +79,12 @@ $border-color: #d9d9d9;
   }
   &-content {
     padding: 8px 0;
+    &-item {
+      display: none;
+      &.selected {
+        display: block;
+      }
+    }
   }
 }
 </style>
