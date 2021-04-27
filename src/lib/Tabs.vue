@@ -1,8 +1,13 @@
 <template>
   <div class="gulu-tabs">
-    <div class="gulu-tabs-nav">
+    <div class="gulu-tabs-nav" ref="container">
       <div
         class="gulu-tabs-nav-item"
+        :ref="
+          (el) => {
+            if (t === selected) selectedItem = el;
+          }
+        "
         @click="select(t)"
         :class="{ selected: t === selected }"
         v-for="(t, index) in titles"
@@ -10,6 +15,7 @@
       >
         {{ t }}
       </div>
+      <div class="gulu-tabs-nav-indicator" ref="indicator"></div>
     </div>
     <div class="gulu-tabs-content">
       <component
@@ -24,7 +30,7 @@
 </template>
 
 <script lang="ts">
-import { computed } from "vue";
+import { computed, onMounted, onUpdated, ref } from "vue";
 import Tab from "./Tab.vue";
 export default {
   props: {
@@ -33,6 +39,20 @@ export default {
     },
   },
   setup(props, context) {
+    const selectedItem = ref<HTMLDivElement>(null);
+    const indicator = ref<HTMLDivElement>(null);
+    const container = ref<HTMLDivElement>(null);
+    const x = () => {
+      const { width } = selectedItem.value.getBoundingClientRect();
+      const { left: left1 } = container.value.getBoundingClientRect();
+      const { left: left2 } = selectedItem.value.getBoundingClientRect();
+      indicator.value.style.width = width + "px";
+      indicator.value.style.left = left2 - left1 + "px";
+    };
+
+    onMounted(x);
+    onUpdated(x);
+
     const defaults = context.slots.default();
     // 检查是否都是Tab组件
     defaults.forEach((tag) => {
@@ -51,7 +71,15 @@ export default {
     const select = (title: string) => {
       context.emit("update:selected", title);
     };
-    return { defaults, titles, current, select };
+    return {
+      defaults,
+      titles,
+      current,
+      select,
+      selectedItem,
+      indicator,
+      container,
+    };
   },
 };
 </script>
@@ -62,6 +90,7 @@ $color: #333;
 $border-color: #d9d9d9;
 .gulu-tabs {
   &-nav {
+    position: relative;
     display: flex;
     color: $color;
     border-bottom: 1px solid $border-color;
@@ -75,6 +104,14 @@ $border-color: #d9d9d9;
       &.selected {
         color: $blue;
       }
+    }
+    &-indicator {
+      position: absolute;
+      height: 3px;
+      background-color: $blue;
+      left: 0;
+      bottom: -1px;
+      transition: all 200ms;
     }
   }
   &-content {
