@@ -9,7 +9,7 @@
       <li><router-link to="/doc">文档</router-link></li>
     </ul>
     <svg v-if="toggleMenuButtonVisible" class="toggleAside" @click="toggleMenu">
-      <use xlink-href="#icon-menu"></use>
+      <use xlink:href="#icon-menu"></use>
     </svg>
   </div>
 </template>
