@@ -45,3 +45,14 @@ body {
   fill: currentColor;
   overflow: hidden;
 }
+
+// 防止侧边栏显示滚动条
+@media (max-width: 500px) {
+  .demo-code pre,
+  .markdown-body pre {
+    &::-webkit-scrollbar {
+      height: 0;
+    }
+    scrollbar-width: none;
+  }
+}
