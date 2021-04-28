@@ -18,19 +18,13 @@
       <div class="gulu-tabs-nav-indicator" ref="indicator"></div>
     </div>
     <div class="gulu-tabs-content">
-      <component
-        class="gulu-tabs-content-item"
-        :class="{ selected: c.props.title === selected }"
-        v-for="(c, index) in defaults"
-        :key="index"
-        :is="c"
-      ></component>
+      <component :is="current" :key="current.props.title" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { onMounted, ref, watchEffect } from "vue";
+import { onMounted, ref, watchEffect, computed } from "vue";
 import Tab from "./Tab.vue";
 export default {
   props: {
@@ -43,13 +37,16 @@ export default {
     const indicator = ref<HTMLDivElement>(null);
     const container = ref<HTMLDivElement>(null);
     onMounted(() => {
-      watchEffect(() => {
-        const { width } = selectedItem.value.getBoundingClientRect();
-        const { left: left1 } = container.value.getBoundingClientRect();
-        const { left: left2 } = selectedItem.value.getBoundingClientRect();
-        indicator.value.style.width = width + "px";
-        indicator.value.style.left = left2 - left1 + "px";
-      });
+      watchEffect(
+        () => {
+          const { width } = selectedItem.value.getBoundingClientRect();
+          const { left: left1 } = container.value.getBoundingClientRect();
+          const { left: left2 } = selectedItem.value.getBoundingClientRect();
+          indicator.value.style.width = width + "px";
+          indicator.value.style.left = left2 - left1 + "px";
+        },
+        { flush: "post" }
+      );
     });
 
     const defaults = context.slots.default();
@@ -60,12 +57,16 @@ export default {
       }
     });
     const titles = defaults.map((tag) => tag.props.title);
+    const current = computed(() => {
+      return defaults.find((tag) => tag.props.title === props.selected);
+    });
 
     const select = (title: string) => {
       context.emit("update:selected", title);
     };
     return {
       defaults,
+      current,
       titles,
       select,
       selectedItem,
@@ -108,12 +109,6 @@ $border-color: #d9d9d9;
   }
   &-content {
     padding: 8px 0;
-    &-item {
-      display: none;
-      &.selected {
-        display: block;
-      }
-    }
   }
 }
 </style>
