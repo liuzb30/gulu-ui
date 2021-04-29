@@ -6,7 +6,7 @@
         <h1>轱辘UI</h1>
         <h2>一个厉害的 UI 框架</h2>
         <p class="actions">
-          <a href="https://github.com">GitHub</a>
+          <a href="https://github.com/liuzb30/gulu-ui">GitHub</a>
           <router-link to="/doc">开始</router-link>
         </p>
       </div>
@@ -15,7 +15,7 @@
       <ul>
         <li>
           <svg>
-            <use xlink:href="#icon-vue"></use>
+            <use xlink:href="#icon-vue3"></use>
           </svg>
           <h3>基于 Vue 3</h3>
           <p>骄傲地使用了 Vue 3 Composition API</p>
@@ -29,7 +29,7 @@
         </li>
         <li>
           <svg>
-            <use xlink:href="#icon-light"></use>
+            <use xlink:href="#icon-code"></use>
           </svg>
           <h3>代码易读</h3>
           <p>每个组件的源代码都极其简洁</p>
@@ -72,6 +72,12 @@ $color: #007974;
 
   @media (min-width: 1200px) {
     width: 1200px;
+  }
+
+  @media (max-width: 500px) {
+    ul {
+      padding-left: 10px;
+    }
   }
 
   > ul {
