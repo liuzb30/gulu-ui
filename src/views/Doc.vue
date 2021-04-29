@@ -31,7 +31,7 @@
           </li>
         </ol>
       </aside>
-      <main>
+      <main id="main">
         <router-view />
       </main>
     </div>
@@ -39,16 +39,32 @@
 </template>
 <script lang="ts">
 import TopNav from "../components/TopNav.vue";
-import { inject, Ref } from "vue";
+import { inject, onBeforeUnmount, onMounted, Ref } from "vue";
 export default {
   components: { TopNav },
   setup() {
     const menuVisible = inject<Ref<boolean>>("menuVisible"); // get
+    const hideMenu = () => {
+      if (menuVisible.value) {
+        menuVisible.value = false;
+      }
+    };
+    onMounted(() => {
+      if (document.body.offsetWidth < 500) {
+        document.getElementById("main").addEventListener("click", hideMenu);
+      }
+    });
+    onBeforeUnmount(() => {
+      if (document.body.offsetWidth < 500) {
+        document.getElementById("main").removeEventListener("click", hideMenu);
+      }
+    });
     return { menuVisible };
   },
 };
 </script>
 <style lang="scss" scoped>
+$lightgreen: #bceeeb;
 .layout {
   display: flex;
   flex-direction: column;
@@ -77,7 +93,7 @@ export default {
   }
 }
 aside {
-  background: lightblue;
+  background: $lightgreen;
   width: 150px;
   padding: 16px 0;
   position: fixed;
@@ -87,6 +103,7 @@ aside {
   height: 100%;
   z-index: 10;
   > h2 {
+    font-size: 22px;
     margin-bottom: 4px;
     padding: 0 16px;
   }
@@ -94,7 +111,7 @@ aside {
     > li {
       > a {
         display: block;
-        padding: 4px 16px;
+        padding: 8px 16px;
         text-decoration: none;
       }
 
