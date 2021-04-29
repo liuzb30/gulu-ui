@@ -4,7 +4,7 @@
       <TopNav />
       <div class="banner">
         <h1>轱辘UI</h1>
-        <h2>一个厉害的 UI 框架</h2>
+        <h2>一个用于学习的 UI 框架</h2>
         <p class="actions">
           <a href="https://github.com/liuzb30/gulu-ui">GitHub</a>
           <router-link to="/doc">开始</router-link>
@@ -18,14 +18,14 @@
             <use xlink:href="#icon-vue3"></use>
           </svg>
           <h3>基于 Vue 3</h3>
-          <p>骄傲地使用了 Vue 3 Composition API</p>
+          <p>使用了 Vue 3 Composition API</p>
         </li>
         <li>
           <svg>
             <use xlink:href="#icon-ts"></use>
           </svg>
           <h3>基于 TypeScript</h3>
-          <p>源代码采用 TypeScript 书写（非严格检查）</p>
+          <p>源代码采用 TypeScript 书写</p>
         </li>
         <li>
           <svg>
